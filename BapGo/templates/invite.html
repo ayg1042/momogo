@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div id="body">
+        <div id="body_main">
+            <h4>momogo</h4>
+            <div id="invite">
+                <div id="qr_div">
+                    초대 QR코드
+                </div>
+                <div id="inv_buto_div">
+                    <button class="inv_button" type="button" id="invite_kakao">카카오 친구</button>
+                    <button class="inv_button" type="button" id="invite_link">초대 링크</button>
+                </div>
+                <button class="inv_button">메뉴 추천 받기</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

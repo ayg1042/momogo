@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans KR", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+#body{
+    width: 500px;
+    height: 700px;
+    /* border: 1px solid black; */
+    margin: 40px auto 0;
+    padding-top: 75px;
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: 2px 3px 4px black;
+    border-radius: 5%;
+    background: rgba(255, 165, 0, 0.7);
+}
+/* 화면 타이틀 부분 */
+#body #body_title{
+    width: 450px;
+    height: 240px;
+    margin: 0 auto;
+    /* border: 1px solid black;
+    box-sizing: border-box; */
+}
+#body #body_title #sub_title{
+    font-size: 50px;
+    /* padding-top: 70px; */
+}
+#body #body_title #main_title{
+    font-size: 70px;
+    font-weight: 600;
+    padding-top: 20px;
+    position: relative;
+    left: -15px;
+}
+#body #body_title #main_title #question{
+    font-size: 90px;
+    font-style: italic;
+    position: absolute;
+    top: -20px;
+}
+/* 화면 내용 부분 */
+#body #body_main{
+    height: 360px;
+    /* border: 1px solid black; */
+    box-sizing: border-box;
+}
+#body #body_main .main_button{
+    width: 300px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 40px auto;
+    border-radius: 40px;
+    display: block;
+    transition: all 0.22s ease-in;
+    cursor: pointer;
+}
+#body #body_main button:hover{
+    box-shadow: 2px 3px 4px black;
+    background-color: rgba(0, 128, 0, 0.7);
+}
+#body #body_main #body_top{
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 20px;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+/* start */
+#body #body_main #search_box{
+    padding-right: 50px;
+    box-sizing: border-box;
+    /* border: 1px solid black; */
+}
+#body #body_main #re_search{
+    width: 175px;
+    height: 30px;
+    font-size: 22px;
+}
+#body #body_main #re_search_button{
+    width: 50px;
+    height: 34px;
+    position: absolute;
+    cursor: pointer;
+}
+/* concept_box */
+#body #body_main #concept_box{
+    text-align: center;
+    zoom:1.5;
+}
+#body #body_main #concept_box p{
+    margin-bottom: 10px;
+}
+#body #body_main #concept_box #concept_box_title{
+    margin-top: 10px;
+}
+#body #body_main #concept_box #concept_box_left,
+#body #body_main #concept_box #concept_box_right{
+    display: inline-block;
+    text-align: left;
+    width: 110px;
+    margin-top: 10px;
+}
+.sub_cans_button,
+.sub_nx_button{
+    height: 40px;
+    width: 150px;
+    border-radius: 45px;
+}
+/* invite */
+#body #invite{
+    width: 100%;
+    height: 500px;
+    border: 1px solid black;
+    
+}
+#body #invite #qr_div{
+    width: 350px;
+    height: 300px;
+    border: 1px solid black;
+    margin: 30px auto 0;
+}
+#body #invite #inv_buto_div{
+    height: 40px;
+    width: 100%;
+    border: 1px solid black;
+    margin: 20px 0;
+}
+.inv_button{
+    height: 40px;
+    width: 150px;
+    border-radius: 45px;
+}
+/* login[member] */
+#login_title{
+    margin: 40px;
+    box-sizing: border-box;
+}
+#login-form{
+    width: 100%;
+    height: 300px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    padding-top: 30px;
+}
+#login-form > input{
+    display: block;
+    width: 250px;
+    height: 40px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-sizing: border-box;
+}

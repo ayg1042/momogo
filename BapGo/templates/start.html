@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div id="body">
+        <div id="body_title">
+            <h2 id="sub_title">우리 오늘은</h2>
+            <h1 id="main_title">MOMOGO<span id="question">?</span></h1>
+        </div>
+        <div id="body_main">
+            <h1>어디로 갈까요??</h4>
+            <div id="search_box">
+                <input type="text" id="re_search">
+                <button id="re_search_button">검색</button>
+            </div>
+            <div id="concept_box">
+                <h2 id="concept_box_title">어떤 자리인가요?</h2>
+                <div id="concept_box_left">
+                    <p>
+                        <input type="checkbox" name="concept" id="di_together" value="di_together">
+                        <label for="di_together">회식</label>
+                    </p>
+                    <p>
+                        <input type="checkbox" name="concept" id="Hospitality" value="Hospitality">
+                        <label for="Hospitality">손님대접</label>
+                    </p>
+                    <p>
+                        <input type="checkbox" name="concept" id="class" value="class">
+                        <label for="class">모임</label>
+                    </p>
+                </div>
+                <div id="concept_box_right">
+                    <p>
+                        <input type="checkbox" name="concept" id="date" value="date">
+                        <label for="date">데이트</label>
+                    </p>
+                    <p>
+                        <input type="checkbox" name="concept" id="eating_out" value="eating_out">
+                        <label for="eating_out">가족외식</label>
+                    </p>
+                    <p>
+                        <input type="checkbox" name="concept" id="eating_alone" value="eating_alone">
+                        <label for="eating_alone">혼밥</label>
+                    </p>
+                </div>
+            </div>
+            <button class="sub_cans_button" type="button" id="guest_button" onclick="window.location.href='/'">이전</button>
+            <button class="sub_nx_button" type="button" id="next_button" onclick="window.location.href='{% url 'BapGo:invite' %}'">다음</button>
+        </div>
+        <div id="body_bottom">
+            <!-- 회원가입 링크 -->
+            <a href="{% url 'member:signup' %}">회원가입</a>
+        </div>
+    </div>
+</body>
+</html>
