@@ -34,7 +34,7 @@ DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
-API_KEY = env.str('API_KEY', default='')
+KAKAO_API_KEY = env.str('KAKAO_API_KEY', default='')
 
 # Application definition
 

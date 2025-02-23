@@ -1,8 +1,11 @@
 from django.shortcuts import render
+from momogo.settings import KAKAO_API_KEY
 
-# Create your views here.
 def start(request):
-    return render(request, 'start.html')
+    context = {
+        'kakao_api_key': KAKAO_API_KEY
+    }
+    return render(request, 'start.html', context)
 
 def invite(request):
     return render(request, 'invite.html')
