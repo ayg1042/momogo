@@ -38,7 +38,7 @@ API_KEY = env.str('API_KEY', default='')
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,7 +48,11 @@ INSTALLED_APPS = [
     'main',
     'member',
     'BapGo',
+    'channels',
+    'websocket_api',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,6 +81,21 @@ TEMPLATES = [
         },
     },
 ]
+
+
+ASGI_APPLICATION = 'momogo.asgi.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],  # localhost 대신 127.0.0.1 명시
+        },
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+} 
+
 
 WSGI_APPLICATION = 'momogo.wsgi.application'
 

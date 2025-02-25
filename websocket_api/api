@@ -1,0 +1,11 @@
+from django.http import JsonResponse
+
+
+
+class WebsocketApi():
+    def __init__(self):
+        print("WebsocketApi Module")
+        
+
+
+

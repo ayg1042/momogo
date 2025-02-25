@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>WebSocket 채팅 테스트</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    #chat-log { border: 1px solid #ccc; padding: 1em; height: 300px; overflow-y: scroll; }
+    #chat-input { width: 80%; padding: 0.5em; }
+    #send-btn { padding: 0.5em 1em; }
+  </style>
+</head>
+<body>
+  <h2>WebSocket 채팅 테스트</h2>
+  <div id="chat-log"></div>
+  <br>
+  <input id="chat-input" type="text" placeholder="메시지를 입력하세요..." autofocus>
+  <button id="send-btn">전송</button>
+
+  <script>
+    const username = "user" + Math.floor(Math.random() * 1000);
+    // 채팅방 이름과 WebSocket URL 설정
+    const roomName = "{{room_name}}";
+    const socketUrl = `ws://${window.location.host}/ws/${roomName}/`;
+    console.log(socketUrl)
+    // WebSocket 생성
+    const socket = new WebSocket(socketUrl);
+
+    // 채팅 로그 업데이트 함수
+    function appendMessage(message) {
+      const chatLog = document.getElementById("chat-log");
+      chatLog.innerHTML += `<p>${message}</p>`;
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    // WebSocket 이벤트 핸들러
+    socket.onopen = function(e) {
+      console.log("WebSocket 연결 성공");
+      appendMessage("연결되었습니다.");
+    };
+
+    socket.onmessage = function(event) {
+      const data = JSON.parse(event.data);
+      console.log(`${data.username}: ${data.message}`);
+      appendMessage(`<strong>${data.username}</strong>: ${data.message}`);
+    };
+
+    socket.onclose = function(e) {
+      console.log("WebSocket 연결 종료");
+      appendMessage("연결이 종료되었습니다.");
+    };
+
+    // 전송 버튼 클릭 시 메시지 보내기
+    document.getElementById("send-btn").onclick = function() {
+      const inputElem = document.getElementById("chat-input");
+      const message = inputElem.value;
+      if (message.trim() !== "") {
+        socket.send(JSON.stringify({
+          "username": username,  // 사용자 이름은 고정하거나 입력받을 수 있습니다.
+          "message": message
+        }));
+        inputElem.value = "";
+      }
+    };
+
+    // 엔터 키 입력 시 메시지 전송
+    document.getElementById("chat-input").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        document.getElementById("send-btn").click();
+      }
+    });
+  </script>
+</body>
+</html>
