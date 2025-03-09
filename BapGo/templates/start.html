@@ -136,6 +136,14 @@
 
                     // db에 데이터 저장
                     saveData(allData)
+                        .then(isSuccess => {
+                            if (isSuccess) {
+                                console.log("데이터가 성공적으로 저장되었습니다!");
+                            } else {
+                                console.log("데이터 저장에 실패했습니다.");
+                            }
+                        })
+                        .catch(error => console.error("에러 발생:", error));
                 }
 
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
@@ -151,15 +159,43 @@
             }
         }
 
-        function saveData(data) {
+        async function saveData(data) {
             // 데이터 전송을 위해 필요한 정보를 JSON 형태로 준비
-            const dataToSend = data.map(place => ({
-                name: place.place_name,
-                address: place.address_name,
-                phone: place.phone
-            }));
-
-            // db에 저장
+            const dataToSend = {
+                places: data.map(place => ({
+                    id: place.id,  // Kakao의 고유 ID
+                    place_name: place.place_name,
+                    road_address_name: place.road_address_name || "",
+                    x: place.x,  // 경도
+                    y: place.y   // 위도
+                }))
+            }; 
+        
+            try {
+                // Django 서버로 데이터 전송 (AJAX 요청)
+                const response = await fetch("http://127.0.0.1:8000/BapGo/save-places/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(dataToSend)
+                });
+        
+                // 응답이 JSON 형태로 성공적으로 돌아왔을 때 처리
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log("서버 응답:", result);
+                    return true;  // 성공 시 true 반환
+                } else {
+                    // 응답이 실패한 경우 처리
+                    console.error("서버 오류:", response.statusText);
+                    return false;  // 실패 시 false 반환
+                }
+            } catch (error) {
+                // 네트워크 오류 등의 예외 처리
+                console.error("데이터 저장 실패:", error);
+                return false;  // 실패 시 false 반환
+            }
         }
     </script>
 </body>
