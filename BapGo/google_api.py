@@ -37,8 +37,6 @@ class GooglePlace():
         if response.status_code == 200 and response_data.get('status') == "OK" and response_data.get('results'):
             # 결과 중 첫 번째 장소 정보 획득
             result = response_data['results'][0]
-            print(f'response_data = \n  {response_data}')
-            print(f'result = \n {result}')
             # place_id 추출
             place_id = result.get("place_id")
             if place_id:
