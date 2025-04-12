@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('main.urls')),
     path('member/', include('member.urls')),
     path('BapGo/', include('BapGo.urls')),
+    path('api/', include('api.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

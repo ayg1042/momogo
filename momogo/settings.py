@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'main',
     'member',
     'BapGo',
+    'api',
 ]
 
 MIDDLEWARE = [
