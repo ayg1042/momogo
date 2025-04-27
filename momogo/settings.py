@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'member',
     'BapGo',
     'api',
+    'result.apps.ResultConfig',
 ]
 
 MIDDLEWARE = [

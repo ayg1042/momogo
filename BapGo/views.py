@@ -6,6 +6,7 @@ from django.shortcuts import render
 from .models import KAKAO_API_TE, GOOGLE_API_TE
 from .google_api import GooglePlace
 from momogo.settings import KAKAO_API_KEY
+from datetime import datetime
 
 gt = GooglePlace()
 
@@ -60,8 +61,13 @@ def save_google_data(request):
 
                     # Google API 정보 저장
                     try:
-                        kakao_place = KAKAO_API_TE.objects.get(kakao_id=item['id'])  # Kakao API 데이터와 연결
-                        
+                        #kakao_place = KAKAO_API_TE.objects.get(kakao_id=item['id'])  # Kakao API 데이터와 연결
+                        # 값이 없으면 애러러
+                        kakao_place = KAKAO_API_TE.objects.filter(kakao_id=item['id']).first()
+                        # 값이 없을때 []
+                        if not kakao_place:
+                            print(f"{item['place_name']}은 KAKAO_API_TE에 존재하지 않음")
+                            continue
                         google_api_data = GOOGLE_API_TE(
                             kakao_id=kakao_place,  # KAKAO_API_TE와 연결
                             google_id=restaurant_details.get("place_id"),
@@ -77,16 +83,19 @@ def save_google_data(request):
                             user_ratings_total=restaurant_details.get("user_ratings_total"),
                             pictures=restaurant_details.get("pictures"),
                             reviews=restaurant_details.get("reviews"),
+                            created_at=datetime.now(),
                         )
                         google_api_data.save()  # 데이터 저장
 
                     except Exception as e:
-                        return JsonResponse({"error": f"Failed to save to DB: {str(e)}"}, status=400)
+                        print(str(e))
+                        # return JsonResponse({"error": f"Failed to save to DB: {str(e)}"}, status=400)
 
             # 데이터 저장 완료 후 응답
             return JsonResponse({"message": "데이터 저장 완료!"}, status=201)
 
         except Exception as e:
+            print(str(e))
             return JsonResponse({"error": str(e)}, status=400)
 
     return JsonResponse({"error": "POST 요청만 허용됩니다."}, status=405)

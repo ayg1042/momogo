@@ -210,9 +210,9 @@ class GooglePlace():
 
 # Example usage
 
-restaurant_name = "더베이커스테이블"
-gp = GooglePlace()
+# restaurant_name = "더베이커스테이블"
+# gp = GooglePlace()
 
 
-restaurant_data = gp.get_restaurant_details(restaurant_name)
-print(restaurant_data)
+# restaurant_data = gp.get_restaurant_details(restaurant_name)
+# print(restaurant_data)
