@@ -24,6 +24,10 @@ urlpatterns = [
     path('', include('main.urls')),
     path('member/', include('member.urls')),
     path('BapGo/', include('BapGo.urls')),
+    path('api/', include('api.urls')),
+    path('result/', include('result.urls')),
+    path('room/', include('room.urls')),
+    path('roomDetail/', include('roomDetail.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

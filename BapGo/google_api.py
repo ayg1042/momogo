@@ -11,7 +11,8 @@ class GooglePlace():
     """
     def __init__(self):
         # Google Places API 키를 인스턴스 변수로 저장
-        self.APIKEY = os.getenv("GOOGLE_PLACES_API_KEY")
+        self.APIKEY = "AIzaSyC-UiOG588zN5JeLzcU3mcnPn5nrT86sh4"
+        print(os.getenv("GOOGLE_PLACES_API_KEY"))
 
     def _get_place_id(self, restaurant_name):
         """
@@ -205,3 +206,13 @@ class GooglePlace():
         except Exception as e:
             # 예외 발생 시 에러 메시지 반환
             return {"Error": str(e)}
+
+
+# Example usage
+
+# restaurant_name = "더베이커스테이블"
+# gp = GooglePlace()
+
+
+# restaurant_data = gp.get_restaurant_details(restaurant_name)
+# print(restaurant_data)

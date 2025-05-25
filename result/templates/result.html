@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="body">
+        <div id="body_title">
+            <h2 id="sub_title">우리 오늘은</h2>
+            <h1 id="main_title">MOMOGO<span id="question">?</span></h1>
+        </div>
+        <div id="body_main">
+            <div id="point_container">
+                <!-- point div 10개 -->
+                <div class="point">
+                    <div class="point-left">
+                        <img src="{% static 'img/sample1.jpg' %}" alt="포인트 이미지">
+                    </div>
+                    <div class="point-right">
+                        <h3 class="point-name">포인트 이름1</h3>
+                        <p class="point-desc">이 포인트에 대한 상세한 설명이 여기에 들어갑니다.</p>
+                    </div>
+                </div>
+                <div class="point">
+                    <div class="point-left">
+                        <img src="{% static 'img/sample1.jpg' %}" alt="포인트 이미지">
+                    </div>
+                    <div class="point-right">
+                        <h3 class="point-name">포인트 이름2</h3>
+                        <p class="point-desc">이 포인트에 대한 상세한 설명이 여기에 들어갑니다.</p>
+                    </div>
+                </div>
+                <div class="point">
+                    <div class="point-left">
+                        <img src="{% static 'img/sample1.jpg' %}" alt="포인트 이미지">
+                    </div>
+                    <div class="point-right">
+                        <h3 class="point-name">포인트 이름3</h3>
+                        <p class="point-desc">이 포인트에 대한 상세한 설명이 여기에 들어갑니다.</p>
+                    </div>
+                </div>
+                <div class="point">
+                    <div class="point-left">
+                        <img src="{% static 'img/sample1.jpg' %}" alt="포인트 이미지">
+                    </div>
+                    <div class="point-right">
+                        <h3 class="point-name">포인트 이름4</h3>
+                        <p class="point-desc">이 포인트에 대한 상세한 설명이 여기에 들어갑니다.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="nav_buttons">
+                <div class="nav-top">
+                    <button id="prev_btn">← 이전</button>
+                    <button id="next_btn">다음 →</button>
+                </div>
+                <div class="nav-top">
+                    <button id="select_btn">선택하기</button>
+                    <button id="select_btn">선택하기</button>
+                    <button id="select_btn">선택하기</button>
+                </div>
+            </div>
+            
+        </div>
+        <div id="body_bottom">
+            <!-- 회원가입 링크 -->
+            <a href="{% url 'member:signup' %}">회원가입</a>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            let currentIndex = 0;
+            const points = $(".point");
+            const total = points.length;
+    
+            // 처음에 첫 번째 div만 보이게 설정
+            points.hide();
+            points.eq(currentIndex).show();
+    
+            $("#next_btn").click(function() {
+                if (currentIndex < total - 1) {
+                    points.eq(currentIndex).hide();
+                    currentIndex++;
+                    points.eq(currentIndex).fadeIn();
+                }
+            });
+    
+            $("#prev_btn").click(function() {
+                if (currentIndex > 0) {
+                    points.eq(currentIndex).hide();
+                    currentIndex--;
+                    points.eq(currentIndex).fadeIn();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

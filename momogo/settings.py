@@ -48,6 +48,10 @@ INSTALLED_APPS = [
     'main',
     'member',
     'BapGo',
+    'api',
+    'result.apps.ResultConfig',
+    'room.apps.roomConfig',
+    'roomDetail.apps.RoomDetailConfig',
 ]
 
 MIDDLEWARE = [
