@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'BapGo',
     'api',
     'result.apps.ResultConfig',
+    'room.apps.roomConfig',
+    'roomDetail.apps.RoomDetailConfig',
 ]
 
 MIDDLEWARE = [
