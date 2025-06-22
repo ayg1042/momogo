@@ -5,19 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>Document</title>
+    <title>Momogo</title>
 </head>
 <body>
     <div id="body">
         <div id="body_main">
             <h2 id="login_title">로그인 페이지</h2>
-            <form method="post" action="" id="login-form">
+            <form method="POST" action="/member/member/" id="login-form">
+                {% csrf_token %}
                 <input type="text" name="userName" placeholder="id">
                 <input type="password" name="userPassword" placeholder="Password">
                 <label for="remember-check">
                     <input type="checkbox" id="remember-check">아이디 저장하기
                 </label>
-                <button type="button" value="Login">로그인</button>
+                <button type="submit" value="Login">로그인</button>
             </form>
         </div>
         <div id="body_bottom">
