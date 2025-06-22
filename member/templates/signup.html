@@ -1,11 +1,60 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Momogo</title>
 </head>
 <body>
-    <h1>회원가입 페이지</h1>
+    <div id="body">
+    <div id="body_main">
+        <h2 id="signup_title">회원가입 페이지</h2>
+        <form id="signup-form">
+            {% csrf_token %}
+            <input type="text" id="id" placeholder="아이디">
+            <input type="password" id="pw" placeholder="비밀번호">
+            <input type="text" id="name" placeholder="이름">
+            <input type="text" id="nicname" placeholder="닉네임">
+            <button type="button" id="signup-btn">회원가입</button>
+        </form>
+        <div id="result-message" style="color: red; margin-top: 10px;"></div>
+    </div>
+    <div id="body_bottom">
+        <a href="{% url 'member:login' %}">로그인</a>
+    </div>
+</div>
+
+<script>
+    $('#signup-btn').on('click', function () {
+        $.ajax({
+            url: "/member/signup/",
+            type: "POST",
+            data: {
+                'id': $('#id').val(),
+                'pw': $('#pw').val(),
+                'name': $('#name').val(),
+                'nicname': $('#nicname').val(),
+                csrfmiddlewaretoken: getCSRFToken()
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#result-message').text("회원가입 성공!").css("color", "green");
+                } else {
+                    $('#result-message').text(response.error || "오류 발생").css("color", "red");
+                }
+            },
+            error: function () {
+                $('#result-message').text("서버 요청 실패").css("color", "red");
+            }
+        });
+    });
+
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+</script>
 </body>
 </html>
