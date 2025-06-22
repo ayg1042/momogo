@@ -19,6 +19,11 @@
                     <input type="checkbox" id="remember-check">아이디 저장하기
                 </label>
                 <button type="submit" value="Login">로그인</button>
+
+                {% if error_message %}
+                    <div style="color: red; margin-top: 10px;">{{error_message}}</div>
+                {% endif %}
+
             </form>
         </div>
         <div id="body_bottom">

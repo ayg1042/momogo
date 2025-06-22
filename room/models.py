@@ -4,6 +4,7 @@ from BapGo.models import GOOGLE_API_TE
 
 # Create your models here.
 class ROOMS(models.Model):
+    # PK가 없으면 no ,PK 만들어준다.
     add_who = models.ForeignKey(Member, on_delete=models.CASCADE)
 
     place_00_id = models.ForeignKey(GOOGLE_API_TE, on_delete=models.CASCADE, related_name='rooms_place_00')

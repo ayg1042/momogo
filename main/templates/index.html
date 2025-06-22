@@ -15,10 +15,15 @@
         </div>
         <div id="body_main">
             <span id="body_top">시작하기!</span>
+            {% if user_id %}
+            <button class="main_button" type="button" id="guest_button" onclick="window.location.href='{% url 'BapGo:start' %}'">시작하기</button>
+            <button class="main_button" type="button" id="guest_button" onclick="window.location.href='{% url 'member:logout' %}'">로그아웃</button>
+            {% else %}
             <!-- 비회원 버튼 -->
             <button class="main_button" type="button" id="guest_button" onclick="window.location.href='{% url 'BapGo:start' %}'">비회원</button>
             <!-- 회원 버튼 -->
             <button class="main_button" type="button" id="member_button" onclick="window.location.href='{% url 'member:login' %}'">회원</button>
+            {% endif %}
         </div>
         <div id="body_bottom">
             <!-- 회원가입 링크 -->
