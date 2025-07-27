@@ -46,6 +46,7 @@
 }
 /* 화면 내용 부분 */
 #body #body_main{
+    width: 90%; /* 혹은 px 단위 ex) 460px */
     height: 360px;
     /* border: 1px solid black; */
     box-sizing: border-box;
@@ -234,4 +235,22 @@
 
 #nav_buttons button:hover {
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+table {
+    /* display: block; */
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 90%;
+}
+
+/* 테이블 헤더와 데이터 셀 텍스트 가운데 정렬 */
+table th,
+table td {
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #000000;
+    padding-left: 10px;
+    padding-right: 10px;
 }
