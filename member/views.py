@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import Member
+from django.db.models import Q
+
 
 # Create your views here.
 def signup_page(request):
@@ -42,3 +44,23 @@ def logout(request):
     if 'user_id' in request.session:
         del request.session['user_id']
     return redirect('/')
+
+
+def list_page(request):
+    return render(request, 'memberList.html')
+
+def getMembers(request):
+    if request.method == "GET":
+        keyword = request.GET.get('keyword', '').strip()
+        if keyword:
+            members = Member.objects.filter(
+                Q(id__icontains=keyword) |
+                Q(name__icontains=keyword) |
+                Q(nicname__icontains=keyword)
+            ).values('id', 'name', 'nicname')
+        else:
+            members = Member.objects.all().values('id', 'name', 'nicname')
+
+        return JsonResponse(list(members), safe=False)
+
+    return JsonResponse({'error': 'GET 요청만 허용됩니다.'}, status=400)

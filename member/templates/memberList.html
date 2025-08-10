@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Momogo</title>
+</head>
+<body>
+    <div id="body">
+        <div id="body_main">
+            <h2>사용자 목록</h2>
+
+                <div id="searchBox">                    
+                    <input type="text" id="searchKeyword" placeholder="검색어를 입력하세요 (ID/이름/닉네임)">
+                    <button id="searchBtn">검색</button>
+                    <button id="resetBtn">초기화</button>
+                </div>
+
+
+                <table id="memberTable">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="checkAll"></th> <!-- 전체 선택 -->
+                            <th>index</th>
+                            <th>이름</th>
+                            <th>아이디</th>
+                            <th>닉네임</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- JavaScript로 채워짐 -->
+                    </tbody>
+                </table>
+
+                <div>
+                    <button id="prev">이전</button>
+                    <button id="create_room">메뉴추천 받기</button>
+                </div>
+        </div>
+    </div>
+    <script>
+
+
+
+        $(document).ready(function () {
+            function getCSRFToken() {
+                return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+}
+
+
+            // 공통 AJAX 함수: 검색어가 없으면 전체 조회
+            function fetchMembers(keyword = '') {
+                $.ajax({
+                    url: '/member/api/members/',
+                    type: 'GET',
+                    data: { 'keyword': keyword },
+                    dataType: 'json',
+                    success: function (data) {
+                        renderTable(data);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("회원 목록을 불러오지 못했습니다.");
+                        console.error("AJAX 오류:", status, error);
+                    }
+                });
+            }
+
+            function inviteMembers(){
+
+            }
+
+
+            // 테이블 렌더링
+            function renderTable(users) {
+                const tbody = $('#memberTable tbody');
+                tbody.empty();
+
+                if (!Array.isArray(users) || users.length === 0) {
+                    tbody.append('<tr><td colspan="5">회원이 없습니다</td></tr>');
+                } else {
+                    users.forEach((user, index) => {
+                        tbody.append(`
+                            <tr>
+                                <td><input type="checkbox" class="rowCheck" data-id="${user.id}"></td>
+                                <td>${index + 1}</td>
+                                <td>${user.name || ''}</td>
+                                <td>${user.id || ''}</td>
+                                <td>${user.nicname || ''}</td>
+                            </tr>
+                        `);
+                    });
+                }
+            }
+
+            // 검색 버튼 클릭
+            $('#searchBtn').on('click', function () {
+                const keyword = $('#searchKeyword').val().trim();
+                
+                fetchMembers(keyword);
+            });
+
+            // 초기화 버튼 클릭
+            $('#resetBtn').on('click', function () {
+                $('#searchKeyword').val('');
+                fetchMembers(); // 전체 조회
+            });
+
+            // 전체 선택 체크박스 기능
+            $(document).on('change', '#checkAll', function () {
+                $('.rowCheck').prop('checked', this.checked);
+            });
+
+            // 개별 체크박스 변경 시 전체 체크박스 상태 갱신
+            $(document).on('change', '.rowCheck', function () {
+                const allChecked = $('.rowCheck').length === $('.rowCheck:checked').length;
+                $('#checkAll').prop('checked', allChecked);
+            });
+
+
+            $('#prev').on('click', function () {
+                // alert("이전 버튼 미구현")
+                history.go(-1)
+            });
+
+            // 방 생성 + 방장 초대 (+ 선택 인원 초대 -> 비동기)
+            $('#create_room').on('click', function () {
+                
+                
+                const selectedIds = $('.rowCheck:checked').map(function () {
+                    return $(this).data('id');
+                }).get();
+
+
+                // CSRF 토큰 필요함
+                const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+               
+                fetch('/room/api/create/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    // TODO: 방장의 ID를 넘겨주거나 views쪽에서 처리 필요
+                    body: JSON.stringify({})  // 필요시 데이터 추가
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('방 생성에 실패했습니다.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // const roomId = data.room_id;
+
+                    if (selectedIds.length > 0) {
+                        console.log("초대 보낼 인원 수 :" + selectedIds.length);
+
+                        /*
+                        // 선택 인원 초대 API 호출 예시
+                        fetch('/api/rooms/invite/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrftoken
+                            },
+                            body: JSON.stringify({
+                                room_id: roomId,
+                                user_ids: selectedIds
+                            })
+                        })
+                        .then(inviteRes => {
+                            if (!inviteRes.ok) throw new Error('초대에 실패했습니다.');
+                            return inviteRes.json();
+                        })
+                        .then(inviteData => {
+                            alert(`${selectedIds.length}명에게 초대를 보냈습니다.`);
+                            window.location.href = `/room/${roomId}/`;
+                        })
+                        .catch(err => alert(err.message));
+                        */
+
+
+
+                        window.location.href = `/room`; // 임시
+                    } else {
+                        console.log("초대할 인원이 없어 바로 방으로 이동");
+                        // window.location.href = `/room/${roomId}/`;
+
+
+
+                        window.location.href = `/room`; // 임시
+                    }
+                })
+                .catch(err => {
+                    alert(err.message);
+                });
+            });
+
+            // 페이지 처음 로드할 때 전체 조회
+            fetchMembers();
+        });
+    </script>
+</body>
+</html>
