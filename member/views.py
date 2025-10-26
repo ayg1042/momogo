@@ -52,6 +52,7 @@ def list_page(request):
 def getMembers(request):
     if request.method == "GET":
         keyword = request.GET.get('keyword', '').strip()
+        user = request.session.get('user_id')
         if keyword:
             members = Member.objects.filter(
                 Q(id__icontains=keyword) |
@@ -59,7 +60,9 @@ def getMembers(request):
                 Q(nicname__icontains=keyword)
             ).values('id', 'name', 'nicname')
         else:
-            members = Member.objects.all().values('id', 'name', 'nicname')
+            # members = Member.objects.all().values('id', 'name', 'nicname')
+            # 본인을 제외한
+            members = Member.objects.exclude(id = user).values('id', 'name', 'nicname')
 
         return JsonResponse(list(members), safe=False)
 
